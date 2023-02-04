@@ -1,0 +1,2 @@
+# Kucoin Dual-Investment Profit-Over-Time Visualizer
+The KuCoin Profit-Over-Time(POT) Visualizer is a python program that shows how much profit-per-term a user is expected to earn off of KuCoin's Dual Investment program after consitently repeated usage.
