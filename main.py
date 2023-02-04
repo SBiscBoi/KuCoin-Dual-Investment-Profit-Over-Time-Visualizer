@@ -4,9 +4,10 @@ from matplotlib import pyplot as plt
 #TODO: allow other pairs besides ETH and USDT
 #TODO: GUI Stuff
 #TODO: Plot
-#for now assume eth vis usdt, no dual support yet
-calsCurrency = input("What currency are you investing? ") # string
-visCurrency = input("What currency are you visualizing? ") # string
+# OPTIONAL
+#calsCurrency = input("What currency are you investing? ") # string
+#visCurrency = input("What currency are you visualizing? ") # string
+# OPTIONAL
 subAmount = float(input("How much did you subscribe with? ")) # float
 termLength = float(input("How many days is each term? ")) # float
 apr = float(input("What is the reference APR? ")) / 100 # float, remove %
@@ -19,18 +20,23 @@ for i in range(termAmu):
     subAmountToUSDT = subAmount * targetPrice
     subAmount = subAmount * (1 + apr * termLength / 365) # stolen from kucoins dual investment page
     profitListY.append((subAmount * targetPrice) - subAmountToUSDT)
-    print(str((subAmount * targetPrice) - subAmountToUSDT)) # print the increase in profit each iteration by finding the new subAmountToUSDT then subtracting that by the previously found one.
+    #print(str((subAmount * targetPrice) - subAmountToUSDT)) # print the increase in profit each iteration by finding the new subAmountToUSDT then subtracting that by the previously found one.
 
 profitListX = []
 
 for j in range(termAmu):
     profitListX.append(j+1)
 
-plt.plot(profitListX, profitListY)
-plt.xlabel("Terms completed")
-plt.ylabel("Profit per term")
-plt.title("The Graph Title")
-plt.show()
+def plot(x=[], y=[]):
+    #TODO: make plot function
+    plt.plot(profitListX, profitListY, 'o', color="green")
+    plt.rcParams["figure.autolayout"] = True
+    plt.xlabel("Terms completed")
+    plt.ylabel("Profit per term")
+    plt.title("Profit-Per-Term in USDT")
+    plt.show()
+
+plot(profitListX, profitListY)
 
 # SUMMARY
 # -- INPUTS NEEDED --
