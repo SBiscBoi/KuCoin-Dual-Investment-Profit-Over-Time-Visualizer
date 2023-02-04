@@ -1,9 +1,73 @@
 from matplotlib import pyplot as plt
+import tkinter as tk
+
+def plot(x=[], y=[]):
+    #TODO: make plot function
+    plt.plot(profitListX, profitListY, 'o', color="green")
+    plt.rcParams["figure.autolayout"] = True
+    plt.xlabel("Terms completed")
+    plt.ylabel("Profit per term")
+    plt.title("Profit-Per-Term in USDT")
+    plt.show()
+
+def initGUI():
+    root = tk.Tk() #create root window
+    root.resizable(False, False)
+    root.title("KuCoin POT Visualizer")
+    #title text
+    title = tk.Label(text="Kucoin Profit-Over-Time(POT) Visualizer", font=("Times New Roman", 22))
+    title.pack()
+
+    # frames
+    subAmuFrame = tk.Frame(relief="groove", borderwidth=5)
+    termLenFrame = tk.Frame(relief="groove", borderwidth=5)
+    aprFrame = tk.Frame(relief="groove", borderwidth=5)
+    termAmuFrame = tk.Frame(relief="groove", borderwidth=5)
+    targetPriceFrame = tk.Frame(relief="groove", borderwidth=5)
+
+    #frame content
+    subAmuInputLabel = tk.Label(master=subAmuFrame, text="Subscribed Amount (Any Currency, Numbers Only):")
+    subAmuInputLabel.pack(side=tk.LEFT)
+    subAmuInputEntry = tk.Entry(master=subAmuFrame)
+    subAmuInputEntry.pack()
+
+    termLenInputLabel = tk.Label(master=termLenFrame, text="Term Length (in days):")
+    termLenInputLabel.pack(side=tk.LEFT)
+    termLenInputEntry = tk.Entry(master=termLenFrame)
+    termLenInputEntry.pack()
+
+    aprInputLabel = tk.Label(master=aprFrame, text="Reference APR:")
+    aprInputLabel.pack(side=tk.LEFT)
+    aprInputEntry = tk.Entry(master=aprFrame)
+    aprInputEntry.pack()
+
+    termAmuInputLabel = tk.Label(master=termAmuFrame, text="Amount of Reccuring Terms:")
+    termAmuInputLabel.pack(side=tk.LEFT)
+    termAmuInputEntry = tk.Entry(master=termAmuFrame)
+    termAmuInputEntry.pack()
+
+    targetPriceFrameInputLabel = tk.Label(master=targetPriceFrame, text="Target Price:")
+    targetPriceFrameInputLabel.pack(side=tk.LEFT)
+    targetPriceFrameInputEntry = tk.Entry(master=targetPriceFrame)
+    targetPriceFrameInputEntry.pack()
+
+    # packing frames
+    subAmuFrame.pack(anchor='w')
+    termLenFrame.pack(anchor='w')
+    aprFrame.pack(anchor='w')
+    termAmuFrame.pack(anchor='w')
+    targetPriceFrame.pack(anchor='w')
+
+    # go button
+    submitButton = tk.Button(text="Visualize!", width="10", height="2", font=("Times New Roman", 16))
+    submitButton.pack(anchor='s')
+
+    root.mainloop() #listen for input
+
+initGUI()
 
 # inputs
-#TODO: allow other pairs besides ETH and USDT
 #TODO: GUI Stuff
-#TODO: Plot
 # OPTIONAL
 #calsCurrency = input("What currency are you investing? ") # string
 #visCurrency = input("What currency are you visualizing? ") # string
@@ -27,14 +91,6 @@ profitListX = []
 for j in range(termAmu):
     profitListX.append(j+1)
 
-def plot(x=[], y=[]):
-    #TODO: make plot function
-    plt.plot(profitListX, profitListY, 'o', color="green")
-    plt.rcParams["figure.autolayout"] = True
-    plt.xlabel("Terms completed")
-    plt.ylabel("Profit per term")
-    plt.title("Profit-Per-Term in USDT")
-    plt.show()
 
 plot(profitListX, profitListY)
 
