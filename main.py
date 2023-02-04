@@ -75,7 +75,7 @@ def initGUI():
     targetPriceFrame.pack(anchor='w')
 
     # go button
-    submitButton = tk.Button(text="Visualize!", width="10", height="2", font=("Times New Roman", 16), command=lambda : submit(subAmuInputEntry.get(), termAmuInputEntry.get(), aprInputEntry.get(), termAmuInputEntry.get(), targetPriceInputEntry.get()))
+    submitButton = tk.Button(text="Visualize!", width="10", height="2", font=("Times New Roman", 16), command=lambda : submit(subAmuInputEntry.get(), termLenInputEntry.get(), aprInputEntry.get(), termAmuInputEntry.get(), targetPriceInputEntry.get()))
     submitButton.pack(anchor='s')
 
     root.mainloop() #listen for input
