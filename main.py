@@ -2,13 +2,29 @@ from matplotlib import pyplot as plt
 import tkinter as tk
 
 def plot(x=[], y=[]):
-    #TODO: make plot function
-    plt.plot(profitListX, profitListY, 'o', color="green")
+    plt.plot(x, y, 'o', color="green")
     plt.rcParams["figure.autolayout"] = True
     plt.xlabel("Terms completed")
     plt.ylabel("Profit per term")
     plt.title("Profit-Per-Term in USDT")
     plt.show()
+
+def submit(subAmu=0, termLen=0, apr=0, termAmu=0, targetPrice=0):
+    #first, ensure input is readable and throw out bad data, possibly warning the user later on
+    subAmu = float(subAmu)
+    termLen = float(termLen)
+    apr = float(apr) / 100 #remove imaginary %
+    termAmu = int(termAmu)
+    targetPrice = float(targetPrice)
+    #error handling here
+    #next, create plotting data
+    x = range(termAmu)
+    y = []
+    for term in range(termAmu):
+        subAmuUSDT = subAmu * targetPrice
+        subAmu = subAmu * (1 + apr * termLen / 365) # stolen from kucoins dual investment page
+        y.append((subAmu * targetPrice) - subAmuUSDT)
+    plot(x, y)
 
 def initGUI():
     root = tk.Tk() #create root window
@@ -46,10 +62,10 @@ def initGUI():
     termAmuInputEntry = tk.Entry(master=termAmuFrame)
     termAmuInputEntry.pack()
 
-    targetPriceFrameInputLabel = tk.Label(master=targetPriceFrame, text="Target Price:")
-    targetPriceFrameInputLabel.pack(side=tk.LEFT)
-    targetPriceFrameInputEntry = tk.Entry(master=targetPriceFrame)
-    targetPriceFrameInputEntry.pack()
+    targetPriceInputLabel = tk.Label(master=targetPriceFrame, text="Target Price:")
+    targetPriceInputLabel.pack(side=tk.LEFT)
+    targetPriceInputEntry = tk.Entry(master=targetPriceFrame)
+    targetPriceInputEntry.pack()
 
     # packing frames
     subAmuFrame.pack(anchor='w')
@@ -59,40 +75,12 @@ def initGUI():
     targetPriceFrame.pack(anchor='w')
 
     # go button
-    submitButton = tk.Button(text="Visualize!", width="10", height="2", font=("Times New Roman", 16))
+    submitButton = tk.Button(text="Visualize!", width="10", height="2", font=("Times New Roman", 16), command=lambda : submit(subAmuInputEntry.get(), termAmuInputEntry.get(), aprInputEntry.get(), termAmuInputEntry.get(), targetPriceInputEntry.get()))
     submitButton.pack(anchor='s')
 
     root.mainloop() #listen for input
 
 initGUI()
-
-# inputs
-#TODO: GUI Stuff
-# OPTIONAL
-#calsCurrency = input("What currency are you investing? ") # string
-#visCurrency = input("What currency are you visualizing? ") # string
-# OPTIONAL
-subAmount = float(input("How much did you subscribe with? ")) # float
-termLength = float(input("How many days is each term? ")) # float
-apr = float(input("What is the reference APR? ")) / 100 # float, remove %
-termAmu = int(input("How many terms are you going to reccuringly reinvest for? ")) # int
-targetPrice = int(input("What is the Target price? ")) # float
-
-profitListY = []
-
-for i in range(termAmu):
-    subAmountToUSDT = subAmount * targetPrice
-    subAmount = subAmount * (1 + apr * termLength / 365) # stolen from kucoins dual investment page
-    profitListY.append((subAmount * targetPrice) - subAmountToUSDT)
-    #print(str((subAmount * targetPrice) - subAmountToUSDT)) # print the increase in profit each iteration by finding the new subAmountToUSDT then subtracting that by the previously found one.
-
-profitListX = []
-
-for j in range(termAmu):
-    profitListX.append(j+1)
-
-
-plot(profitListX, profitListY)
 
 # SUMMARY
 # -- INPUTS NEEDED --
